@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-service
+  labels:
+    app: payday
+spec:
+  # replicas: 1
+  selector:
+    matchLabels:
+      app: payday
+  template:
+    metadata:
+      labels:
+        app: payday
+    spec:
+      containers:
+      - name: transactions-service
+        image: malikaliyev94/transactions-service:latest
+        ports:
+        - containerPort: 9002
+          protocol: TCP
+        env:
+        - name: MONGO_USERNAME
+          value: "Jack"
+        - name: MONGO_PASSWORD
+          value: "hQrHXtxAZTD4lHL3"
+      - name: mongo
+        image: mongo:4.0
+        ports:
+        - containerPort: 25001
+          protocol: TCP
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: "Jack"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: "hQrHXtxAZTD4lHL3"
